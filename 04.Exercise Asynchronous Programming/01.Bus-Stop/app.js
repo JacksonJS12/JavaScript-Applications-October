@@ -7,6 +7,7 @@ async function getInfo() {
 
     busList.innerHTML = "";
     stopId.value = "";
+    
     try{
         const response = await fetch(url);
         const data = await response.json();
@@ -20,5 +21,4 @@ async function getInfo() {
     } catch(error){
         stopNameElement.textContent = "Error";
     }
-    
 }
