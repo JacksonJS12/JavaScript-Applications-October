@@ -1,3 +1,4 @@
+
 const container = document.querySelector('.container');
 const section = document.querySelector('.theme-content');
 const form = section.querySelector('form');
@@ -5,6 +6,7 @@ const theme = section.querySelector('.theme-name-wrapper');
 const commentsElement = section.querySelector('div#user-comment');
 section.remove();
 form.addEventListener('submit', onSubmit);
+debugger
 export async function showDetails(postId) {
     loadTheme(postId);
     loadComments(postId);

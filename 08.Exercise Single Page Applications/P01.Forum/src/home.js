@@ -52,6 +52,7 @@ function onDetails(e) {
         target = target.parentElement;
     }
     if (target.tagName === 'A') {
+        debugger
         showDetails(target.dataset.id);
     }
 }
