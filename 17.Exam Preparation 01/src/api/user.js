@@ -1,5 +1,5 @@
-import { clearUserData, setUserData } from "../util";
-import { get, post } from "./api.js";
+import { clearUserData, setUserData } from '../util.js';
+import { get, post } from "../api/api.js";
 
 export async function login(email, password){
     const {id, email: resultEmail, accessToken} = await post('/users/login', {email, password})
