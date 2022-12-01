@@ -1,0 +1,1 @@
+import {del,get, post, put} from '../api/api.js' //this line is common for all exams
