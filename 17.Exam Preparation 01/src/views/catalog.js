@@ -19,7 +19,7 @@ const petCardTemplate = (pet) => html`
     <h2 class="name">${pet.name}</h2>
     <h3 class="breed">${pet.breed}</h3>
     <div class="action">
-        <a class="btn" href="#">Details</a>
+        <a class="btn" href="/catalog/${pet._id}">Details</a>
     </div>
 </div>`;
 
