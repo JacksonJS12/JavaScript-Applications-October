@@ -3,7 +3,7 @@ import {getUserData} from '../util.js'
 
 const host = 'http://localhost:3030'
 
-async function request({method, url, data}){
+async function request(method, url, data){
     const options = {
         method, 
         headers: {}
