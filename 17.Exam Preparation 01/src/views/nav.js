@@ -1,5 +1,5 @@
 import { logout } from '../api/user.js'
-import {render, page} from '../lib.js'
+import {render, page, html} from '../lib.js'
 import { getUserData } from '../util.js';
 
 const nav = document.querySelector('header');

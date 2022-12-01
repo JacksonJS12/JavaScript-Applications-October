@@ -1,16 +1,17 @@
+//this file is common for all exams
 import {getUserData} from '../util.js'
 
-const host = 'http://localhost:3000';
+const host = 'http://localhost:3030'
 
-async function request(method, url, data){
+async function request({method, url, data}){
     const options = {
-        method,
+        method, 
         headers: {}
     }
 
     if(data !== undefined){
-        options.headers['Content'] = 'application/json';
-        options.body = JSON.stringify(data); 
+        options.headers['Content-Type'] = 'applications/json'
+        options.body = JSON.stringify(data);
     }
 
     const user = getUserData();
@@ -19,20 +20,20 @@ async function request(method, url, data){
         options.headers['X-Authorization'] = user.accessToken;
     }
 
-    try{
+    try {
         const response = await fetch(host + url, options);
-
+        
         if(response.status == 204){
             return response;
         }
+
         const result = await response.json();
 
         if(response.ok == false){
-            throw new Error(result.message);
+            throw new Error(result.message)
         }
 
         return result;
-
     } catch(error){
         alert(error.message);
         throw error;
