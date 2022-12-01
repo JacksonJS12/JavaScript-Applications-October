@@ -1,4 +1,4 @@
-const { getUserData } = require("../util");
+const { getUserData } = require("../util.js");
 
 const host = 'http://localhost:3000';
 
