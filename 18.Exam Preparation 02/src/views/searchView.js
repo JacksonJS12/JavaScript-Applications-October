@@ -1,7 +1,7 @@
 import { searchAlbum } from '../api/data.js';
-import { html } from '../lib.js'
+import { html, nothing } from '../lib.js'
 
-const searchTemp = (isClicked, handler) => html`
+const searchTemp = (isClicked, handler, albums, hasUser) => html`
 <section id="searchPage">
     <h1>Search by Name</h1>
 
@@ -14,31 +14,41 @@ const searchTemp = (isClicked, handler) => html`
 
     ${
         isClicked ?
-        html `
-        <div class="search-result">
-            <div class="card-box">
-                <img src="./images/BrandiCarlile.png">
-                <div>
-                    <div class="text-center">
-                        <p class="name">Name: In These Silent Days</p>
-                        <p class="artist">Artist: Brandi Carlile</p>
-                        <p class="genre">Genre: Low Country Sound Music</p>
-                        <p class="price">Price: $12.80</p>
-                        <p class="date">Release Date: October 1, 2021</p>
-                    </div>
-                    <div class="btn-group">
-                        <a href="#" id="details">Details</a>
-                    </div>
-                </div>
+            albums.length > 0 ?
+                html `
+            <div class="search-result">
+                ${albums.map(album => createCard(album, hasUser))}
             </div>
-        </div>
-        ` : html `
-            <p class="no-result">No result.</p>
-        `
+            ` : html `
+                <p class="no-result">No result.</p>
+            ` 
+            : nothing
     }
         
 </section>
 `;
+
+const createCard = (album, hasUser) => html `<div class="card-box">
+<img src=${album.imgUrl}>
+<div>
+    <div class="text-center">
+        <p class="name">Name: ${album.name}</p>
+        <p class="artist">Artist: ${album.artist}</p>
+        <p class="genre">Genre: ${album.genre}</p>
+        <p class="price">Price: $${album.price}</p>
+        <p class="date">Release Date: ${album.date}</p>
+    </div>
+    ${hasUser ?
+        html `
+            <div class="btn-group">
+                <a href="/details/${album._id}" id="details">Details</a>
+            </div>
+        `
+        : nothing
+    }
+    
+</div>
+</div>`
 
 export async function showSearch(ctx){
 
@@ -49,7 +59,7 @@ export async function showSearch(ctx){
         if(!query){
             return alert("enter text")
         }
-        await searchAlbum(query);
-        debugger
+        const albums = await searchAlbum(query);
+        ctx.render(searchTemp(true, onSearch, albums, ctx.user))
     }
 }
