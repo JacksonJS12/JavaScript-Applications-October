@@ -10,7 +10,7 @@ const cardTemp = (album, hasUser) => html`
             <p class="artist">Artist: ${album.artist}</p>
             <p class="genre">Genre: ${album.genre}</p>
             <p class="price">Price: $${album.price}</p>
-            <p class="date">Release: ${album.releaseDate}</p>
+            <p class="date">Release Date: ${album.releaseDate}</p>
         </div>
         ${hasUser ? 
         html `<div class="btn-group">
