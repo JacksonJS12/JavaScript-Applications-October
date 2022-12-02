@@ -1,4 +1,4 @@
-import {del,get, post, put} from '../api/api.js' //this line is common for all exams
+import {del ,get, post, put} from '../api/api.js' //this line is common for all exams
 
 const endpoints = {
     'albums' : '/data/albums',
@@ -11,4 +11,8 @@ export async function createAlbum(data){
 
 export async function getAllAlbums(){
     return get(endpoints.getAllAlbums);
+}
+
+export async function getDetailsById(id){
+    return get(endpoints.albums + "/" + id);
 }

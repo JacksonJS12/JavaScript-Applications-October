@@ -6,6 +6,7 @@ import { showRegister } from "./views/registerView.js";
 import { showHome } from "./views/homeView.js";
 import { showCreate } from "./views/createView.js";
 import { showCatalog } from "./views/catalogView.js";
+import { showDetails } from "./views/detailsView.js";
 //import views
 
 
@@ -22,7 +23,7 @@ page('/login', showLogin);
 page('/register', showRegister);
 page('/catalog', showCatalog);
 page('/create', showCreate);
-page('/detail/:id', () => console.log("detailView"));
+page('/detail/:id', showDetails);
 page('/edit/:id', () => console.log("editView"));
 page('/search', () => console.log("searchView"));
 
