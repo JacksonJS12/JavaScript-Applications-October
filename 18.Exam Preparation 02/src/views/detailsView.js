@@ -1,7 +1,7 @@
-import { getDetailsById } from '../api/data.js';
-import { html } from '../lib.js'
+import { deleteAlbumById, getDetailsById } from '../api/data.js';
+import { html, nothing } from '../lib.js'
 
-const detailTemp = (album, isOwner) => html`
+const detailsTemp = (album, isOwner, onDelete) => html`
 <section id="detailsPage">
     <div class="wrapper">
         <div class="albumCover">
@@ -24,8 +24,9 @@ const detailTemp = (album, isOwner) => html`
                 html `
                 <div class="actionBtn">
                     <a href="/edit/${album._id}" class="edit">Edit</a>
-                    <a href="#" class="remove">Delete</a>
-                </div>` : nothing
+                    <a @click=${onDelete} href="javascript:void(0)" class="remove">Delete</a>
+                </div>` 
+                : nothing
             }
             
         </div>
@@ -37,5 +38,14 @@ export async function showDetails(ctx){
     const id = ctx.params.id;
     const album = await getDetailsById(id)
     const isOwner = album._ownerId === ctx.user._id;
-    ctx.render(detailTemp(album, isOwner));
+    ctx.render(detailsTemp(album, isOwner, onDelete));
+
+    async function onDelete(){
+        const userConfirm = confirm("are you sure?") 
+        if(!userConfirm){
+            return
+        }
+        await deleteAlbumById(id);
+        ctx.page.redirect('/catalog')
+    }
 }

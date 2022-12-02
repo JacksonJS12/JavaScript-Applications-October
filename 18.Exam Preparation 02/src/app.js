@@ -7,6 +7,8 @@ import { showHome } from "./views/homeView.js";
 import { showCreate } from "./views/createView.js";
 import { showCatalog } from "./views/catalogView.js";
 import { showDetails } from "./views/detailsView.js";
+import { showEdit } from "./views/editView.js";
+import { showSearch } from "./views/searchView.js";
 //import views
 
 
@@ -23,9 +25,9 @@ page('/login', showLogin);
 page('/register', showRegister);
 page('/catalog', showCatalog);
 page('/create', showCreate);
-page('/detail/:id', showDetails);
-page('/edit/:id', () => console.log("editView"));
-page('/search', () => console.log("searchView"));
+page('/details/:id', showDetails);
+page('/edit/:id', showEdit);
+page('/search', showSearch);
 
 updateNav();
 page.start();
