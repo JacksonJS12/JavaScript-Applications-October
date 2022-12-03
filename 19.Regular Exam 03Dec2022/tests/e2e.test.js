@@ -543,7 +543,7 @@ describe('E2E tests', function () {
       expect(postData.release).to.contains(data.release + 'edit');
     });
 
-    it('Delete makes correct API call for logged in user [ 10 Points ]', async () => {
+     it('Delete makes correct API call for logged in user [ 10 Points ]', async () => {
       await loginUser();
       const data = mockData.catalog[0];
       const user = mockData.users[0];

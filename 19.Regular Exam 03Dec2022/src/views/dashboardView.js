@@ -1,7 +1,7 @@
 import { html, nothing } from '../lib.js'
 import { getAllAlbums } from '../api/data.js'
 
-const cardTemp = (album, hasUser) => html`
+const cardTemp = (album) => html`
 <!-- Display a li with information about every post (if any)-->
 
 <li class="card">
@@ -14,21 +14,16 @@ const cardTemp = (album, hasUser) => html`
     </p>
     <p><strong>Sales:</strong><span class="sales">${album.sales}</span></p>
     
-    ${hasUser ? 
-        html `
-        <a class="details-btn" href="/details/${album._id}">Details</a>
-        ` : 
-        nothing
-    }
+    <a class="details-btn" href="/details/${album._id}">Details</a>
 </li>
 `
-const dashboardTemp = (albums, hasUser) => html`
+const dashboardTemp = (albums) => html`
 <section id="dashboard">
     <h2>Albums</h2>
      ${albums.length > 0 ?
         html 
         ` <ul class="card-wrapper">
-            ${albums.map(album => cardTemp(album, hasUser))}
+            ${albums.map(album => cardTemp(album))}
          </ul>`
             
          :
@@ -41,6 +36,6 @@ const dashboardTemp = (albums, hasUser) => html`
 
 export async function showDashboard(ctx) {
     const allAlbums = await getAllAlbums();
-    ctx.render(dashboardTemp(allAlbums, !!ctx.user));
+    ctx.render(dashboardTemp(allAlbums));
 }
 

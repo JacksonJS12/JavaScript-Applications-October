@@ -4,6 +4,7 @@ const endpoints = {
     'albums' : '/data/albums',
     'getAllAlbums' : '/data/albums?sortBy=_createdOn%20desc',
     'singleAlbum' : '/data/albums/',
+    'albumLike' : '/data/likes'
 }
 
 export async function getAllAlbums(){
@@ -22,7 +23,10 @@ export async function deleteAlbumById(id){
     return del(endpoints.singleAlbum + '/' + id);
 }
 
-
 export async function updateAlbum(id, data){
     return put(endpoints.singleAlbum + id, data)    
+}
+
+export async function like(data){
+    return post(endpoints.albumLike, data);
 }

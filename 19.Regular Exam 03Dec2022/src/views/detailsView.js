@@ -1,7 +1,7 @@
-import { deleteAlbumById, getDetailsById } from '../api/data.js';
+import { deleteAlbumById, getDetailsById, like } from '../api/data.js';
 import { html, nothing } from '../lib.js'
 
-const detailsTemp = (album, isOwner, onDelete) => html`
+const detailsTemp = (album, isOwner, onDelete, isReg) => html`
 <section id="details">
     <div id="details-wrapper">
         <p id="details-title">Album Details</p>
@@ -17,28 +17,43 @@ const detailsTemp = (album, isOwner, onDelete) => html`
             <p><strong>Label:</strong><span id="details-label">${album.label}</span></p>
             <p><strong>Sales:</strong><span id="details-sales">${album.sales}</span></p>
         </div>
-        <div id="likes">Likes: <span id="likes-count">${album.likes}</span></div>
+        <div id="likes">Likes: <span id="likes-count">0</span></div>
 
-        <!--Edit and Delete are only for creator-->
+        <!--Edit and Delete are only for creator--> 
         ${ 
             isOwner ?
             html `
             <div id="action-buttons">
-                <a href="" id="like-btn">Like</a>
-                <a href="" id="edit-btn">Edit</a>
+                <a href="/edit/${album._id}" id="edit-btn">Edit</a>
                 <a @click=${onDelete} href="javascript:void(0)" id="delete-btn">Delete</a>
             </div>
+            ` : nothing
+        }
+
+        ${
+            isReg ?
+            html `
+            <div id="action-buttons">
+            <a @click=${hideButton} href="" id="like-btn">Like</a>
+            </div>
+            
             ` : nothing
         }
     </div>
 </section>
 `
 
+export async function hideButton(){
+    let btn = document.getElementById('like-btn');
+    btn.style.display = 'none';
+}
+
 export async function showDetails(ctx) {
     const id = ctx.params.id;
     const album = await getDetailsById(id)
-    const isOwner = album._ownerId === ctx.user._id;
-    ctx.render(detailsTemp(album, isOwner, onDelete));
+    const isOwner = album._ownerId === ctx?.user?._id;
+    const isReg = ctx?.user?._id !== undefined && album?._ownerId !== ctx?.user?._id;
+    ctx.render(detailsTemp(album, isOwner, onDelete, isReg));
 
     async function onDelete() {
         const userConfirm = confirm("are you sure?")
